@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07110f">
+  <title>$CUMIUM — Research Institute</title>
+  <style>
+    :root { --ink:#07110f; --paper:#dce8df; --muted:#89a59a; --acid:#95ffd5; --line:rgba(149,255,213,.22); --panel:rgba(10,31,26,.86); --danger:#ffbf76; }
+    * { box-sizing:border-box }
+    html { scroll-behavior:smooth }
+    body { margin:0; min-width:320px; color:var(--paper); background:var(--ink); font:15px/1.65 Arial,Helvetica,sans-serif; overflow-x:hidden }
+    body::before { content:""; position:fixed; inset:0; z-index:-2; opacity:.42; background:radial-gradient(circle at 72% 7%,#1b765b 0,transparent 28rem),radial-gradient(circle at 2% 70%,#123b31 0,transparent 35rem),#07110f }
+    body::after { content:""; position:fixed; inset:0; pointer-events:none; z-index:-1; opacity:.17; background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px); background-size:44px 44px; mask-image:linear-gradient(#000,transparent 78%) }
+    a { color:inherit }
+    .shell { width:min(1160px,91vw); margin:auto }
+    nav { min-height:82px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; gap:24px }
+    .brand { font:700 13px/1.1 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.13em; text-decoration:none; text-transform:uppercase }
+    .brand b { color:var(--acid) }
+    .nav-links { display:flex; align-items:center; gap:22px; font:11px ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.09em }
+    .nav-links a { text-decoration:none; color:var(--muted) }
+    .nav-links a:hover { color:var(--acid) }
+    .hero { min-height:650px; display:grid; grid-template-columns:1.1fr .9fr; gap:8vw; align-items:center; padding:70px 0 82px }
+    .eyebrow,.tag { font:11px ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.13em; text-transform:uppercase; color:var(--acid) }
+    h1 { max-width:720px; margin:20px 0; font:800 clamp(54px,9vw,118px)/.84 Arial,Helvetica,sans-serif; letter-spacing:-.075em }
+    h1 em { display:block; color:var(--acid); font-style:normal }
+    .lead { max-width:550px; color:var(--muted); font-size:18px; line-height:1.6 }
+    .actions { display:flex; align-items:center; flex-wrap:wrap; gap:15px; margin-top:31px }
+    .button { display:inline-flex; padding:12px 17px; color:var(--ink); background:var(--acid); border:1px solid var(--acid); font:700 11px ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.09em; text-decoration:none }
+    .button:hover { background:transparent; color:var(--acid) }
+    .button.ghost { color:var(--paper); background:transparent; border-color:var(--line) }
+    .specimen { position:relative; justify-self:center; width:min(350px,78vw); aspect-ratio:1; padding:14px; background:linear-gradient(135deg,var(--acid),transparent 35%,transparent 65%,var(--acid)); box-shadow:0 0 55px rgba(149,255,213,.13) }
+    .specimen img { width:100%; height:100%; display:block; object-fit:cover; filter:saturate(.8) contrast(1.08) }
+    .specimen::after { content:"SPECIMEN 67 / UNSTABLE"; position:absolute; right:-11px; bottom:-29px; color:var(--acid); font:10px ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.11em; transform:rotate(-90deg); transform-origin:top right }
+    .ticker { border-block:1px solid var(--line); overflow:hidden; white-space:nowrap; color:var(--acid); font:12px ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.13em; text-transform:uppercase }
+    .ticker span { display:inline-block; padding:14px 0; animation:scroll 25s linear infinite }
+    @keyframes scroll { to { transform:translateX(-50%) } }
+    .section { padding:108px 0; border-bottom:1px solid var(--line) }
+    .section-head { display:grid; grid-template-columns:190px 1fr; gap:38px; margin-bottom:32px }
+    h2 { margin:0; font-size:clamp(30px,4vw,48px); line-height:1; letter-spacing:-.05em }
+    .section-copy { max-width:600px; margin:0; color:var(--muted); font-size:17px }
+    .report { border:1px solid var(--line); background:var(--panel); display:grid; grid-template-columns:repeat(3,1fr) }
+    .report article { padding:30px; min-height:235px; border-right:1px solid var(--line) }
+    .report article:last-child { border:0 }
+    .number { display:block; margin-bottom:34px; color:var(--acid); font:12px ui-monospace,SFMono-Regular,Menlo,monospace }
+    h3 { margin:0 0 12px; font-size:20px; letter-spacing:-.03em }
+    .report p,.warning p { margin:0; color:var(--muted) }
+    .monitor { display:grid; grid-template-columns:1.2fr .8fr; border:1px solid var(--line); background:var(--panel) }
+    .monitor-main { padding:38px }
+    .status-row { display:flex; align-items:center; gap:12px; margin-top:28px; color:var(--acid); font:16px ui-monospace,SFMono-Regular,Menlo,monospace }
+    .dot { flex:0 0 auto; width:10px; height:10px; border-radius:50%; background:var(--acid); box-shadow:0 0 17px var(--acid); animation:pulse 1.8s infinite }
+    @keyframes pulse { 50% { opacity:.4; transform:scale(.75) } }
+    .monitor-side { padding:36px; border-left:1px solid var(--line); font:12px/2 ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--muted) }
+    .monitor-side b { color:var(--paper); font-weight:400 }
+    .properties { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-left:1px solid var(--line) }
+    .property { min-height:150px; padding:23px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); background:rgba(10,31,26,.48) }
+    .property span { display:block; margin-bottom:24px; color:var(--muted); font:10px ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.1em; text-transform:uppercase }
+    .property b { font-size:18px }
+    .warning { position:relative; overflow:hidden; padding:44px; border:1px solid rgba(255,191,118,.5); background:linear-gradient(110deg,rgba(94,57,18,.37),rgba(10,31,26,.82)) }
+    .warning .tag { color:var(--danger) }
+    .warning h2 { margin:12px 0 20px }
+    .warning p { max-width:650px; font-size:17px }
+    .symptoms { display:flex; flex-wrap:wrap; gap:10px; margin-top:27px }
+    .symptoms span { padding:7px 10px; border:1px solid rgba(255,191,118,.35); color:#f0c998; font:10px ui-monospace,SFMono-Regular,Menlo,monospace; text-transform:uppercase }
+    footer { padding:31px 0 43px; color:var(--muted); display:flex; justify-content:space-between; gap:20px; font:11px ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.06em }
+    @media (max-width:760px) { nav { min-height:68px } .nav-links a:not(:last-child) { display:none } .hero { min-height:auto; grid-template-columns:1fr; padding:70px 0 95px; gap:65px } .specimen { order:-1; justify-self:start; width:min(280px,76vw) } .section { padding:76px 0 } .section-head,.monitor { grid-template-columns:1fr } .section-head { gap:17px } .report,.properties { grid-template-columns:1fr 1fr } .report article:nth-child(2) { border-right:0 } .report article:last-child { border-top:1px solid var(--line); grid-column:1/-1 } .monitor-side { border-left:0; border-top:1px solid var(--line) } .warning { padding:30px 24px } }
+    @media (max-width:430px) { .report,.properties { grid-template-columns:1fr } .report article { border-right:0; border-bottom:1px solid var(--line) } .report article:last-child { grid-column:auto } footer { display:block } footer span+span { display:block; margin-top:9px } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav>
+      <a class="brand" href="#top">CUMIUM <b>/ CM-67</b></a>
+      <div class="nav-links"><a href="#discovery">DISCOVERY</a><a href="#properties">PROPERTIES</a><a href="#warning">WARNING</a><a href="#" aria-label="Twitter link coming soon">TWITTER ↗</a></div>
+    </nav>
+
+    <main id="top">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Cumium Research Institute / Field Report 067</div>
+          <h1>THE MARKET<br>CREATED <em>$CUMIUM.</em></h1>
+          <p class="lead">A synthetic meme compound first detected when charts went flat, liquidity vanished, and the timeline had nothing left to do but mutate.</p>
+          <div class="actions"><a class="button" href="#discovery">READ THE REPORT</a><a class="button ghost" href="#" aria-label="Contract address coming soon">CONTRACT: PENDING</a></div>
+        </div>
+        <div class="specimen"><img src="logo.jpg" alt="Cumium periodic-table specimen"></div>
+      </section>
+    </main>
+  </div>
+  <div class="ticker"><span>⚗ MARKET CRASH DETECTED &nbsp;—&nbsp; PRODUCTIVITY LEVELS FALLING &nbsp;—&nbsp; CONTAINMENT FAILURE IMMINENT &nbsp;—&nbsp; MARKET CRASH DETECTED &nbsp;—&nbsp; PRODUCTIVITY LEVELS FALLING &nbsp;—&nbsp; CONTAINMENT FAILURE IMMINENT &nbsp;—&nbsp;</span></div>
+  <div class="shell">
+    <section class="section" id="discovery">
+      <div class="section-head"><div class="tag">01 / Discovery</div><div><h2>Born in the sideways.</h2><p class="section-copy">During an extended crypto market crash, researchers observed a strange new reaction among traders with too much screen time and nowhere to deploy it.</p></div></div>
+      <div class="report">
+        <article><span class="number">OBSERVATION 01</span><h3>Liquidity disappeared.</h3><p>Charts were flat. Conviction was low. Every candle felt personally insulting.</p></article>
+        <article><span class="number">OBSERVATION 02</span><h3>Boredom intensified.</h3><p>Some stopped trading. Others became slackers. A critical few started posting nonsense.</p></article>
+        <article><span class="number">OBSERVATION 03</span><h3>A compound formed.</h3><p>Researchers named the reaction Cumium: highly reactive, questionably stable, and extremely viral.</p></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="monitor-title">
+      <div class="section-head"><div class="tag">02 / Live Monitor</div><div><h2 id="monitor-title">Laboratory status.</h2><p class="section-copy">The Institute is tracking Cumium across the open internet. Current conditions remain unsuitable for productivity.</p></div></div>
+      <div class="monitor"><div class="monitor-main"><div class="tag">Current reading</div><div class="status-row"><span class="dot"></span><span id="labStatus" aria-live="polite">Initializing detection systems...</span></div></div><div class="monitor-side"><b>COMPOUND:</b> CM-67<br><b>CLASS:</b> SYNTHETIC MEME<br><b>STABILITY:</b> QUESTIONABLE<br><b>REACTIVITY:</b> EXTREMELY VIRAL</div></div>
+    </section>
+
+    <section class="section" id="properties">
+      <div class="section-head"><div class="tag">03 / Properties</div><div><h2>Conditions for formation.</h2><p class="section-copy">Cumium appears most frequently where attention is abundant, the market is collapsing, and no one has touched grass recently.</p></div></div>
+      <div class="properties"><div class="property"><span>Environment 01</span><b>Prolonged boredom</b></div><div class="property"><span>Environment 02</span><b>Collapsing markets</b></div><div class="property"><span>Environment 03</span><b>Internet overexposure</b></div><div class="property"><span>Environment 04</span><b>Minimal productivity</b></div></div>
+    </section>
+
+    <section class="section" id="warning">
+      <div class="warning"><div class="tag">Institute Warning / Unclassified</div><h2>Containment is currently impossible.</h2><p>Cumium molecules bond rapidly between bored traders. Once enough particles connect, the compound spreads through social platforms at terminal velocity.</p><div class="symptoms"><span>Severe boredom</span><span>Chronic chart watching</span><span>Spontaneous meme creation</span><span>Loss of productivity</span></div></div>
+    </section>
+    <footer><span>© CUMIUM RESEARCH INSTITUTE</span><span>NO FINANCIAL ADVICE. STRICTLY SCIENTIFICALLY UNSTABLE.</span></footer>
+  </div>
+  <script>
+    const statuses = ["Cumium concentration rising","Productivity levels falling","Degeneracy detected","Bored trader activity increasing","Meme reaction unstable","Containment failure","Internet exposure critical","Sideways market conditions detected"];
+    const status = document.getElementById("labStatus");
+    function updateLabStatus() { status.textContent = statuses[Math.floor(Math.random() * statuses.length)]; }
+    updateLabStatus(); setInterval(updateLabStatus, 2500);
+  </script>
+</body>
+</html>
